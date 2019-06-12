@@ -3,20 +3,20 @@
 #include "tf/transform_broadcaster.h"
 #include <nav_msgs/Odometry.h>
 
-class hedge_msg_adapter_node
+class marvelmind_tf  //marvelmind_tf
 {
 public:
-  hedge_msg_adapter_node() 
+  marvelmind_tf() // marvelmind_tf
   {
     ros::NodeHandle nh_; 
     
     // Init subscribers
-    pos_ang_sub_ = nh_.subscribe("hedge_pos_ang", 10, &hedge_msg_adapter_node::pos_ang_callback, this);
+    pos_ang_sub_ = nh_.subscribe("hedge_pos_ang", 10, &marvelmind_tf::pos_ang_callback, this);
 
     // Init publishers
     hedge_pose_pub_ = nh_.advertise<nav_msgs::Odometry>("gps", 50);   
  
-    pose_out_.header.frame_id = "gps";
+    pose_out_.header.frame_id = "map";
     pose_out_.child_frame_id = "base_footprint";
   }
 
@@ -58,9 +58,9 @@ protected:
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "hedge_msg_adapter");
+  ros::init(argc, argv, "marvelmind_tf");
 
-  hedge_msg_adapter_node adapter;
+  marvelmind_tf adapter;
 
   ros::spin();
 }
